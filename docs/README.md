@@ -11,4 +11,4 @@
 
 
 ### 扫码关注，查看更多文章
-![](http://go.liuqh.icu/public/wxcode.png)
+![](https://52lu.github.io/k8s-learn-doc/public/wxcode.png)
