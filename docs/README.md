@@ -7,5 +7,14 @@
 
 
 
+### 内容主要来源
+
+- [Kubernetes权威指南](https://book.douban.com/subject/33444476/)
+- [每天5分钟玩转Kubernetes](https://book.douban.com/subject/30186113/)
+- [Kubernetes进阶实战](https://book.douban.com/subject/30435129/)
+
+
+
 ### 扫码关注，查看更多文章
 ![](http://go.liuqh.icu/public/wxcode.png)
+
