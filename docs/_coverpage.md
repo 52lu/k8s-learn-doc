@@ -1,6 +1,6 @@
 <!-- _coverpage.md -->
 
-![logo](http://go.liuqh.icu/public/author.png)
+![logo](https://52lu.github.io/k8s-learn-doc/public/author.png)
 
 
 # **K8s学习文档**
@@ -17,4 +17,4 @@
 <!-- ![color](#f0f0f0) -->
 
 <!-- 背景图片 -->
-![](public/img/bg.jpg)
+![](https://52lu.github.io/k8s-learn-doc/public/img/bg.jpg)
