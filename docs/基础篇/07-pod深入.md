@@ -169,7 +169,7 @@ spec:         #必选，Pod中容器的详细定义
 
 - `Always`:  镜像标签为`latest`或镜像不存在时总是从指定的仓库中获取镜像。
 - `Never`: 禁止从仓库下载镜像，即仅使用本地镜像。
-- `IfNotPresent`: 仅当本地镜像缺失时，才从目标仓库下载镜像
+- `IfNotPresent`: 仅当本地镜像缺失时，才从目标仓库下载镜像
 
 ### 5.3 restartPolicy(Pod的重启策略)
 
