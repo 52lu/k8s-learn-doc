@@ -41,7 +41,7 @@ spec:
 
 ### 2.2 创建 & 检查
 
-```shell
+```bash
 # 为了测试创建命名空间
 $ kubectl create namespace test
 namespace/test created
@@ -270,7 +270,7 @@ http-liveness-deploy-558c8b48cf-wwvbp   1/1     Running   1 (30s ago)   ...
 
 ## 5. ReadinessProbe实践
 
-除了`Liveness`探测，`Kubernetes Health Check`机制还包括`Readiness`探测。用户通过`Liveness`探测可以告诉`Kubernetes`什么时候通过重启容器实现自愈；**<font color=red>`Readiness`探测则是告诉`Kubernetes`什么时候可以将容器加入到`Service`负载均衡池中，对外提供服务。</font>**
+除了`Liveness`探测，`Kubernetes Health Check`机制还包括`Readiness`探测。用户通过`Liveness`探测可以告诉`Kubernetes`什么时候通过重启容器实现自愈；<b><font color=red>`Readiness`探测则是告诉`Kubernetes`什么时候可以将容器加入到`Service`负载均衡池中，对外提供服务。</font></b>
 
 > **<font color=blue>Readiness探测的配置语法与Liveness探测完全一样,只需要把`livenessProbe`换成`readinessProbe`</font>**
 
@@ -355,7 +355,7 @@ Events:
 
 - `Liveness`探测和`Readiness`探测是两种`Health Check`机制，如果不特意配置，`Kubernetes`将对两种探测采取相同的默认行为，即通过判断容器启动进程的返回值是否为零来判断探测是否成功.
 
-- 两种探测的配置方法完全一样，支持的配置参数也一样。**<font color=red>不同之处在于探测失败后的行为</font>**
+- 两种探测的配置方法完全一样，支持的配置参数也一样。<b><font color=red>不同之处在于探测失败后的行为</font></b>
 
   - `Liveness`探测: 重启容器；
 
