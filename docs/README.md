@@ -12,6 +12,7 @@
 - [Kubernetes权威指南](https://book.douban.com/subject/33444476/)
 - [每天5分钟玩转Kubernetes](https://book.douban.com/subject/30186113/)
 - [Kubernetes进阶实战](https://book.douban.com/subject/30435129/)
+- [Kubernetes in Action中文版](https://book.douban.com/subject/30418855/)
 
 
 
