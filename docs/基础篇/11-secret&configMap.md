@@ -235,6 +235,185 @@ $ kubectl exec -it test-pod2 bash
 
 > <font color=red>需要注意的是，环境变量读取Secret很方便，但无法支撑Secret动态更新。</font>
 
+## 5. ConfigMap介绍
+
+`Secret`可以为`Pod`提供密码、`Token`、私钥等敏感数据；对于一些非敏感数据，比如应用的配置信息，则可以用`ConfigMap`。
+
+> `ConfigMap`的创建和使用方式与`Secret`非常类似，主要的不同是数据以明文的形式存放。
+
+### 5.1 创建ConfigMap
+
+#### a. 通过`yaml`创建
+
+文件: `app_conf.yaml`
+
+```yaml
+apiVersion: v1
+kind: ConfigMap # 注意这里类型是ConfigMap
+metadata:
+  name: appconfig
+data:
+  appName: "k8s学习" # 这里只写明文，不需要base64
+  appVersion: "v1.0.0"
+```
+
+**发布:**
+
+```bash
+$ kubectl apply -f app-conf.yaml
+configmap/appconfig created
+```
+
+### 5.2 使用ConfigMap
+
+与`Secret`一样，`Pod`也可以通过`Volume`或者**环境变量**的方式使用`Secret`,这里只演示`Volume`方式：
+
+#### a. Pod配置文件
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-map-demo
+spec:
+  containers:
+    - image: busybox
+      name: write-box
+      args:
+        - /bin/sh
+        - -c
+        - sleep; touch /tmp/health;sleep 30000
+      volumeMounts:
+        - mountPath: "/etc/k8sconf" # 映射到容器的目录位置
+          name: "confmapdemo"
+  volumes:
+    - name: confmapdemo
+      configMap: # 这里有别于secret
+        name: appconfig # 上面创建的configMap名称
+```
+
+#### b. 发布验证
+
+```bash
+# 发布
+$ kubectl apply -f config-map-pod.yaml
+pod/config-map-demo created
+# 进入容器查看
+[root@master secret]# kubectl exec -it config-map-demo sh
+kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
+➜ cd /etc/k8sconf/
+➜ ls
+appName     appVersion
+➜ cat appName
+k8s学习
+➜ cat appVersion
+v1.0.0
+```
+
+### 5.3 通过配置文件创建Configmap
+
+大多数情况下，配置信息都以文件形式提供，所以在创建`ConfigMap`时通常采用`--from-file`或`YAML`方式，读取`ConfigMap`时通常采用`Volume`方式。
+
+比如我们的应用配置文件如下,现需要把它传递到容器中:
+
+文件名: `app.toml`
+
+```toml
+app_name = "k8s-learn"
+app_version = "v1.0.0"
+[database.default]
+driver = "mysql"
+host = "127.0.0.1"
+port = "3306"
+username = "test"
+password = "test"
+[redis.default]
+addr = "127.0.0.1:6379"
+db = 2
+```
+
+#### a. 创建
+
+```bash
+# 发布
+$ kubectl create configmap appconf --from-file=./app.toml
+# 查看
+$ kubectl describe cm appconf
+Name:         appconf
+Namespace:    default
+...
+Data
+====
+app.toml:
+----
+app_name = "k8s-learn"
+app_version = "v1.0.0"
+[database.default]
+driver = "mysql"
+host = "127.0.0.1"
+port = "3306"
+username = "test"
+password = "test"
+[redis.default]
+addr = "127.0.0.1:6379"
+db = 2
+...
+```
+
+#### b. 使用
+
+**编辑`Pod`配置文件:`conf-map-file.yaml`**
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-map-file
+spec:
+  containers:
+    - image: busybox
+      name: write-box
+      args:
+        - /bin/sh
+        - -c
+        - sleep; touch /tmp/health;sleep 30000
+      volumeMounts:
+        - mountPath: "/etc/appconf" # 容器映射目录
+          name: "confmapdemo"
+  volumes:
+    - name: confmapdemo
+      configMap:
+        name: appconf
+        items:
+          - key: app.toml # configMap中的key
+            path: www/app.toml # 存到容器相对目录： 容器映射目录+www/app.toml
+```
+
+**发布&验证:**
+
+```bash
+# 发布
+$ kubectl apply -f conf-map-file.yaml
+pod/config-map-file created
+# 进入容器查看
+➜  pwd
+/etc/appconf/www
+➜ ls
+app.toml
+➜ cat app.toml
+app_name = "k8s-learn"
+app_version = "v1.0.0"
+[database.default]
+driver = "mysql"
+host = "127.0.0.1"
+port = "3306"
+username = "test"
+password = "test"
+[redis.default]
+addr = "127.0.0.1:6379"
+db = 2
+```
+
 
 
 
