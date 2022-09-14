@@ -6,24 +6,9 @@
 
 ## 2. 创建Secret
 
-### 2.1 语法
+### 2.1 通过`env`文件
 
-> 我们都是通过语法`kubectl create secret`来创建`secret`,下面列出`secret` 子命令信息，我们常用的是`kubectl create secret generic`
-
-```bash
-$ kubectl create secret -h
-Create a secret using specified subcommand.
-
-Available Commands:
-  docker-registry   创建一个给 Docker registry 使用的 secret
-  generic           Create a secret from a local file, directory, or literal value
-  tls               创建一个 TLS secret
-
-Usage:
-  kubectl create secret [flags] [options]
-```
-
-### 2.2 通过`env`文件
+> <font color=red>语法: `kubectl create secret generic name --from-env-file=env文件 `</font>
 
 #### a. 编辑`env`文件
 
@@ -249,4 +234,7 @@ $ kubectl exec -it test-pod2 bash
 ```
 
 > <font color=red>需要注意的是，环境变量读取Secret很方便，但无法支撑Secret动态更新。</font>
+
+
+
 
