@@ -383,7 +383,7 @@ spec:
   volumes:
     - name: confmapdemo
       configMap:
-        name: appconf
+        name: appconf # 我们上面创建的configmap名称
         items:
           - key: app.toml # configMap中的key
             path: www/app.toml # 存到容器相对目录： 容器映射目录+www/app.toml
