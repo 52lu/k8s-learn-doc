@@ -11,4 +11,5 @@
   - [8.Pod健康检查](基础篇/08-pod健康检查.md)
   - [9.深入Service](基础篇/09-深入Service.md)
   - [10.数据管理](基础篇/10-数据管理.md)
-  - [11.Secret使用](基础篇/11-secret使用.md)
+  - [11.Secret和ConfigMap](基础篇/11-secret&configMap.md)
+  - [12.helm初步入门](基础篇/12-helm初步入门.md)
